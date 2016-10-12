@@ -1,0 +1,73 @@
+---
+
+- name: Update apt database
+  action: apt update_cache=yes cache_valid_time=3600
+  tags: apt
+
+- name: Upgrade packages
+  action: apt upgrade=full
+  tags: apt
+
+- name: Install common packages
+  action: apt pkg={{ item }} state=installed
+  with_items:
+    - mc
+    - htop
+    - nmap
+    - curl
+    - git
+    - vim
+    - vim-nox
+    - wget
+    - tree
+    - iptables-persistent
+    - sudo
+    - screen
+    - tmux
+    - tcpdump
+    - netcat
+    - mtr
+    - hping3
+    - dialog
+    - ntp
+    - bash-completion
+    - bzip2
+    - xz-utils
+    - whois
+    - telnet
+    - time
+    - lvm2
+    - lsof
+    - host
+    - gnupg2
+    - ftp
+    - dnsutils
+    - bind9-host
+    - apt-transport-https
+    - ca-certificates
+  tags: common
+
+- debconf: name='iptables autosave v4' question='iptables-persistent/autosave_v4' value='true' vtype='boolean'
+- debconf: name='iptables autosave v6' question='iptables-persistent/autosave_v6' value='true' vtype='boolean'
+
+- locale_gen: name=en_US.UTF-8 state=present
+  register: localeconfig
+
+- copy: src=locale dest=/etc/default/locale owner=root group=root mode=0644
+  when: localeconfig
+
+- name: MOTD
+  action: template src=motd.j2 dest=/etc/motd
+  tags:
+    - motd_config
+
+- name: dotfiles
+  copy: src=.bashrc dest=/root/.bashrc owner=root group=root mode=0644
+
+- copy: src=.vimrc dest=/root/.vimrc owner=root group=root mode=0644
+
+- name: Creates IHTG directory
+  action: file
+    path=/etc/ihtg
+    state='directory'
+
