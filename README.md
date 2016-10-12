@@ -11,9 +11,9 @@ Just make sure Ansible has access.
 Example Playbook
 ----------------
 
-  - hosts: all
-    roles:
-      - baseline
+    - hosts: all
+      roles:
+        - server.baseline
 
 TODO
 ----
