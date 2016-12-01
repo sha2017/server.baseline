@@ -45,6 +45,8 @@
     - bind9-host
     - apt-transport-https
     - ca-certificates
+    - bridge-utils
+    - ifenslave
   tags: common
 
 - debconf: name='iptables autosave v4' question='iptables-persistent/autosave_v4' value='true' vtype='boolean'
