@@ -49,8 +49,8 @@
     - ifenslave
   tags: common
 
-- debconf: name='iptables autosave v4' question='iptables-persistent/autosave_v4' value='true' vtype='boolean'
-- debconf: name='iptables autosave v6' question='iptables-persistent/autosave_v6' value='true' vtype='boolean'
+#- debconf: name='iptables autosave v4' question='iptables-persistent/autosave_v4' value='true' vtype='boolean'
+#- debconf: name='iptables autosave v6' question='iptables-persistent/autosave_v6' value='true' vtype='boolean'
 
 - locale_gen: name=en_US.UTF-8 state=present
   register: localeconfig
